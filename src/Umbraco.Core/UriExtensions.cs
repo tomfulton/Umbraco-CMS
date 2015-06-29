@@ -1,9 +1,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
 using Umbraco.Core.Configuration;
 using Umbraco.Core.IO;
 
@@ -50,7 +47,6 @@ namespace Umbraco.Core
             
             //check if this is in the umbraco back office
             var isUmbracoPath = urlPath.InvariantStartsWith(GlobalSettings.Path.EnsureStartsWith('/').TrimStart(appPath.EnsureStartsWith('/')).EnsureStartsWith('/'));
-
             //if not, then def not back office
             if (isUmbracoPath == false) return false;
 

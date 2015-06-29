@@ -1,9 +1,12 @@
 ﻿using System;
+using Moq;
 using NUnit.Framework;
 using SQLCE4Umbraco;
+using Umbraco.Core.Logging;
 using Umbraco.Core.Persistence;
 using Umbraco.Core.Persistence.Migrations;
 using Umbraco.Core.Persistence.SqlSyntax;
+using Umbraco.Core.Services;
 using Umbraco.Web.Strategies.Migrations;
 using GlobalSettings = Umbraco.Core.Configuration.GlobalSettings;
 
@@ -24,7 +27,10 @@ namespace Umbraco.Tests.Migrations.Upgrades
             var fix = new PublishAfterUpgradeToVersionSixth();
 
             //Setup the MigrationRunner
-            var migrationRunner = new MigrationRunner(configuredVersion, targetVersion, GlobalSettings.UmbracoMigrationName);
+            var migrationRunner = new MigrationRunner(
+                Mock.Of<IMigrationEntryService>(),
+                Mock.Of<ILogger>(), configuredVersion, targetVersion, GlobalSettings.UmbracoMigrationName);
+
             bool upgraded = migrationRunner.Execute(db, provider, true);
 
             Assert.That(upgraded, Is.True);
@@ -52,12 +58,12 @@ namespace Umbraco.Tests.Migrations.Upgrades
 
         public override ISqlSyntaxProvider GetSyntaxProvider()
         {
-            return SqlCeSyntax.Provider;
+            return new SqlCeSyntaxProvider();
         }
 
         public override UmbracoDatabase GetConfiguredDatabase()
         {
-            return new UmbracoDatabase("Datasource=|DataDirectory|UmbracoPetaPocoTests.sdf;Flush Interval=1;", "System.Data.SqlServerCe.4.0");
+            return new UmbracoDatabase("Datasource=|DataDirectory|UmbracoPetaPocoTests.sdf;Flush Interval=1;", "System.Data.SqlServerCe.4.0", Mock.Of<ILogger>());
         }
 
         public override DatabaseProviders GetDatabaseProvider()
