@@ -235,7 +235,8 @@ namespace Umbraco.Core.Persistence.Repositories
                 //TODO: We should really use this methodology for Content/Members too!! since it includes properties and ALL of the dynamic db fields
                 var entities = _work.Database.Fetch<dynamic, UmbracoPropertyDto, UmbracoEntity>(
                     new UmbracoEntityRelator().Map, mediaSql);
-                return entities;
+                return entities
+                    .DistinctBy(n => n.Id);
             }
             else
             {
