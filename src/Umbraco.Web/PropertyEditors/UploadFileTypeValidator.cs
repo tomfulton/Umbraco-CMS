@@ -21,7 +21,7 @@ namespace Umbraco.Web.PropertyEditors
             var asJson = value as JObject;
             if (asJson == null) yield break;
             if (asJson["selectedFiles"] == null) yield break;
-            var fileNames = asJson["selectedFiles"].ToString().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            var fileNames = asJson["selectedFiles"].ToString().Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var fileName in fileNames)
             {
                 if (ValidateFileExtension(fileName) == false)

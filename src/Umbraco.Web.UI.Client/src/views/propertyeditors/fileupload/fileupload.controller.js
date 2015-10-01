@@ -110,7 +110,7 @@ function fileUploadController($scope, $element, $compile, imageHelper, fileManag
             for (var i = 0; i < args.files.length; i++) {
                 //save the file object to the scope's files collection
                 $scope.files.push({ alias: $scope.model.alias, file: args.files[i] });
-                newVal += args.files[i].name + ",";
+                newVal += args.files[i].name + "|";
             }
 
             //this is required to re-validate
@@ -121,7 +121,7 @@ function fileUploadController($scope, $element, $compile, imageHelper, fileManag
             //set the model value to be the concatenation of files selected. Please see the notes
             // in the description of this controller, it states that this value isn't actually used for persistence,
             // but we need to set it so that the editor and the server can detect that it's been changed, and it is used for validation.
-            $scope.model.value = { selectedFiles: newVal.trimEnd(",") };
+            $scope.model.value = { selectedFiles: newVal.trimEnd("|") };
         });
     });
 
