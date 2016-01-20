@@ -181,6 +181,7 @@ namespace Umbraco.Core.Persistence.Repositories
                         .Where<NodeDto>(dto => dto.NodeObjectType == mediaObjectType);
 
                     var deleteSql = SqlSyntax.GetDeleteSubquery("cmsContentXml", "nodeId", subQuery);
+                    Database.CommandTimeout = 300;
                     Database.Execute(deleteSql);
                 }
                 else
@@ -200,6 +201,7 @@ namespace Umbraco.Core.Persistence.Repositories
                             .Where<ContentDto>(dto => dto.ContentTypeId == id1);
 
                         var deleteSql = SqlSyntax.GetDeleteSubquery("cmsContentXml", "nodeId", subQuery);
+                        Database.CommandTimeout = 300;
                         Database.Execute(deleteSql);
                     }
                 }

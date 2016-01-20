@@ -36,10 +36,11 @@ namespace Umbraco.Core.Persistence.Migrations.Upgrades.TargetVersionSix
                 {
                     Delete.ForeignKey("FK_umbracoUser2app_umbracoApp").OnTable("umbracoUser2app");
                 }
-                if (constraints.Any(x => x.Item1.InvariantEquals("umbracoUser2app") && x.Item3.InvariantEquals("FK_umbracoUser2app_umbracoUser")))
-                {
-                    Delete.ForeignKey("FK_umbracoUser2app_umbracoUser").OnTable("umbracoUser2app");
-                }    
+                // TF: This runs with TargetVersionFourNineZero
+                //if (constraints.Any(x => x.Item1.InvariantEquals("umbracoUser2app") && x.Item3.InvariantEquals("FK_umbracoUser2app_umbracoUser")))
+                //{
+                //    Delete.ForeignKey("FK_umbracoUser2app_umbracoUser").OnTable("umbracoUser2app");
+                //}    
             }
 
             Delete.Table("umbracoApp");
