@@ -863,7 +863,7 @@ namespace Umbraco.Web.Editors
             if (unpublishResult == false)
             {
                 AddCancelMessage(content);
-                throw new HttpResponseException(Request.CreateValidationErrorResponse(content));
+                return content;
             }
             else
             {
